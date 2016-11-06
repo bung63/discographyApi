@@ -2,6 +2,11 @@
 
 # a simple rest API for a discography application
 
+## JDBC details for applicationserver I have used a simple Derby Db
+
+#### create-jdbc-connection-pool --datasourceclassname org.apache.derby.jdbc.ClientDataSource --restype javax.sql.XADataSource --property portNumber=1527:password=discography:user=discography:serverName=localhost:databaseName=discographyDb:connectionAttributes=\;create\\=true jpa_disco_pool
+#### create-jdbc-resource --connectionpoolid jpa_disco_pool jdbc/discography
+
 #### I have set this up on a Glassfish server which has a problem with "ClassNotFoundException: com.fasterxml.jackson.module.jaxb.JaxbAnnotationIntrospector" on the first call after deploy after that it works fine 
 
 # A few CRUD example below
