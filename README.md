@@ -2,7 +2,7 @@
 
 # a simple rest API for a discography application
 
-## I have set this up on a Glassfish server which has a problem with "ClassNotFoundException: com.fasterxml.jackson.module.jaxb.JaxbAnnotationIntrospector" on the first call after deploy after that it works fine 
+#### I have set this up on a Glassfish server which has a problem with "ClassNotFoundException: com.fasterxml.jackson.module.jaxb.JaxbAnnotationIntrospector" on the first call after deploy after that it works fine 
 
 # A few CRUD example below
 
