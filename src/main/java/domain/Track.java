@@ -10,7 +10,7 @@ import javax.persistence.*;
  */
 @Entity
 public class Track {
-    @GeneratedValue(strategy = GenerationType.SEQUENCE)
+    @GeneratedValue(strategy = GenerationType.AUTO)
     @Id
     private Long id;
 
@@ -23,7 +23,11 @@ public class Track {
 
     public Track() {
     }
+    public Track(Long id, String track) {
+        this.id = id;
+        this.track = track;
 
+    }
     public Track(Long id, String track, Album album) {
         this.id = id;
         this.track = track;
@@ -52,5 +56,10 @@ public class Track {
 
     public void setAlbum(Album album) {
         this.album = album;
+    }
+
+    @Override
+    public String toString(){
+        return getTrack() + " " + getId();
     }
 }

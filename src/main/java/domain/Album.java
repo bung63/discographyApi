@@ -3,6 +3,7 @@ package domain;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import javax.persistence.*;
+import java.util.ArrayList;
 import java.util.List;
 
 
@@ -11,7 +12,7 @@ import java.util.List;
  */
 @Entity
 public class Album {
-    @GeneratedValue(strategy = GenerationType.SEQUENCE)
+    @GeneratedValue(strategy = GenerationType.AUTO)
     @Id
     private Long id;
 
@@ -22,21 +23,31 @@ public class Album {
     @OneToMany(fetch=FetchType.LAZY, cascade =  CascadeType.ALL, mappedBy="album")
     private List<Track> tracks;
 
-    @ManyToOne(fetch= FetchType.LAZY)
-    @JoinColumn(name = "ARTIST_ID")
+    @ManyToOne(fetch= FetchType.LAZY,optional=false)
+
+    @JoinColumn(name = "artist_id")
     @JsonIgnore
     private Artist artist;
 
 
     public Album() {
-    }
 
+    }
+    public Album(Long id,String title, String release, List<Track> tracks) {
+        this.id = id;
+        this.title = title;
+        this.release = release;
+        this.tracks = tracks;
+
+    }
     public Album(Long id,String title, String release, List<Track> tracks, Artist artist) {
         this.id = id;
         this.title = title;
         this.release = release;
         this.tracks = tracks;
         this.artist = artist;
+
+
     }
 
     public Long getId() {
@@ -67,6 +78,13 @@ public class Album {
         return tracks;
     }
 
+    public void addTrack(Track track) {
+        if ( this.tracks == null )
+            this.tracks = new ArrayList<>();
+
+        this.tracks.add(track);
+    }
+
     public void setTracks(List<Track> tracks) {
         this.tracks = tracks;
     }
@@ -77,5 +95,10 @@ public class Album {
 
     public void setArtist(Artist artist) {
         this.artist = artist;
+    }
+
+    @Override
+    public String toString(){
+        return getTitle() + " " + getId();
     }
 }

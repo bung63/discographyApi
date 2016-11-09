@@ -2,6 +2,7 @@ package domain;
 
 import javax.persistence.*;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -16,7 +17,7 @@ import java.util.List;
 
 })
 public class Artist  {
-    @GeneratedValue(strategy = GenerationType.SEQUENCE)
+    @GeneratedValue(strategy = GenerationType.AUTO)
     @Id
     private Long id;
 
@@ -51,9 +52,14 @@ public class Artist  {
     public List<Album> getAlbums() {
         return albums;
     }
+    public void addAlbum(Album album) {
+        if ( this.albums== null )
+            this.albums = new ArrayList<>();
 
+        this.albums.add(album);
+    }
     public void setAlbums(List<Album> albums) {
-        this.albums = albums;
+       this.albums = albums;
     }
 
     @Override

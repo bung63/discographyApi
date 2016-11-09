@@ -73,32 +73,36 @@ public class ArtistResourceImpl implements ArtistResource{
     }
     @Override
     public void updateArtist(Artist artist){
-
+        artist.getAlbums().stream().forEach(System.out::println);
         Artist a;
 
         if (artist.getId() == null ) {
+
             a = new Artist();
             a.setName(artist.getName());
-            System.out.println(artist);
-            entityManager.persist(a);
-            List<Album> aAlbums = artist.getAlbums().stream().map(b->
-                new Album(b.getId(),b.getTitle(),b.getRelease(),b.getTracks().stream().map(c->
-                    new Track(c.getId(),c.getTrack(),b)).collect(Collectors.toList()), a)).collect(Collectors.toList());
 
-            a.setAlbums(aAlbums);
-            //      entityManager.persist(a);
-            entityManager.merge(a);
+            for (Album al:artist.getAlbums()) {
+                al.setArtist(a);
+                for (Track track:al.getTracks()) {
+                    track.setAlbum(al);
+                }
+                a.addAlbum(al);
+            }
+
+            entityManager.persist(a);
 
         } else {
             a = entityManager.find(Artist.class, artist.getId());
             a.setName(artist.getName());
-            List<Album> aAlbums = artist.getAlbums().stream().map(b->
-                    new Album(b.getId(),b.getTitle(),b.getRelease(),b.getTracks().stream().map(c->
-                            new Track(c.getId(),c.getTrack(),b)).collect(Collectors.toList()), a)).collect(Collectors.toList());
+            for (Album al:artist.getAlbums()) {
+                al.setArtist(a);
+                for (Track track:al.getTracks()) {
+                    track.setAlbum(al);
+                }
+                a.addAlbum(al);
+            }
 
-            a.setAlbums(aAlbums);
 
-            entityManager.merge(a);
         }
 
     }
